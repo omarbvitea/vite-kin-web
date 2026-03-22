@@ -1,2 +1,14 @@
 @import 'tailwindcss';
-@plugin 'daisyui';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@plugin "daisyui" {
+    themes: bumblebee;
+}
+@plugin "daisyui/theme" {
+    name: 'bumblebee';
+    default: true;
+    --color-primary: #de9d1f;
+}
