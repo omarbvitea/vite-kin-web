@@ -6,7 +6,7 @@ const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
 
     return (
-        <div className="min-h-screen bg-base-100 flex flex-col font-sans">
+        <div className="min-h-screen flex flex-col font-sans">
             <main className="flex-1 flex flex-col lg:flex-row">
                 <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/5">
                     <div className="absolute inset-0 z-10 bg-linear-to-tr from-black/60 via-transparent to-transparent"></div>
@@ -49,8 +49,8 @@ const Auth = () => {
                     </div>
                 </div>
 
-                <div className="flex-1 flex items-center lg:items-start lg:pt-40 justify-center p-6 md:p-12 lg:p-20 bg-base-100">
-                    <div className="flex flex-col w-full max-w-md gap-6">
+                <div className="grid grid-rows-12 flex-1 gap-10 px-6 md:px-12 lg:px-20">
+                    <div className="space-y-6 row-span-4 place-content-end">
                         <div className="text-center lg:text-left">
                             <h2 className="text-3xl font-black tracking-tight mb-2 text-base-content">
                                 {isLogin ? 'Bienvenido de nuevo' : 'Crea tu cuenta'}
@@ -61,40 +61,24 @@ const Auth = () => {
                                     : 'Empieza a documentar tu historia familiar hoy mismo.'}
                             </p>
                         </div>
-
-                        <div className="flex flex-col gap-6">
-                            <div className="tabs tabs-box w-fit">
-                                <button
-                                    role="tab"
-                                    className={`tab font-bold ${isLogin ? 'tab-active' : ''}`}
-                                    onClick={() => setIsLogin(true)}
-                                >
-                                    Iniciar Sesión
-                                </button>
-                                <button
-                                    role="tab"
-                                    className={`tab font-bold ${!isLogin ? 'tab-active' : ''}`}
-                                    onClick={() => setIsLogin(false)}
-                                >
-                                    Registrarse
-                                </button>
-                            </div>
-
-                            {isLogin ? <LoginForm /> : <RegisterForm />}
-                        </div>
-
-                        <div className="text-center">
-                            <p className="text-sm text-base-content/60">
-                                {isLogin ? '¿Aún no tienes una cuenta?' : '¿Ya tienes una cuenta?'}
-                                <button
-                                    className="font-bold text-primary hover:underline ml-1 hover:cursor-pointer"
-                                    onClick={() => setIsLogin(!isLogin)}
-                                >
-                                    {isLogin ? 'Crea una aquí' : 'Inicia sesión aquí'}
-                                </button>
-                            </p>
+                        <div className="tabs tabs-box w-fit">
+                            <button
+                                role="tab"
+                                className={`tab font-bold ${isLogin ? 'tab-active' : ''}`}
+                                onClick={() => setIsLogin(true)}
+                            >
+                                Iniciar Sesión
+                            </button>
+                            <button
+                                role="tab"
+                                className={`tab font-bold ${!isLogin ? 'tab-active' : ''}`}
+                                onClick={() => setIsLogin(false)}
+                            >
+                                Registrarse
+                            </button>
                         </div>
                     </div>
+                    <div className="row-span-8">{isLogin ? <LoginForm /> : <RegisterForm />}</div>
                 </div>
             </main>
         </div>
