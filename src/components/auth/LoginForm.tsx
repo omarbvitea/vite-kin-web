@@ -4,39 +4,40 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { EyeIcon, EyeSlashIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 
 import { loginSchema, type LoginFormValues } from '@/schemas/auth'
-import { useToast } from '@/hooks/use-toast'
+import { useLogin } from '@/hooks/use-login'
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false)
-    const toast = useToast()
+
+    const { login, isLoading } = useLogin()
 
     const {
-        register: loginForm,
-        handleSubmit: handleLoginSubmit,
-        formState: { errors: loginErrors },
+        register,
+        handleSubmit,
+        formState: { errors },
     } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: { email: '', password: '' },
     })
 
-    const onLogin = async (data: LoginFormValues) => {
-        toast.info('La funcionalidad de login se implementará pronto.')
-        console.log('Login data:', data)
-    }
+    const onLogin = handleSubmit(async (data: LoginFormValues) => {
+        await login({
+            email: data.email,
+            password: data.password,
+        })
+    })
 
     return (
-        <form className="space-y-1" onSubmit={handleLoginSubmit(onLogin)}>
+        <form className="space-y-1" onSubmit={onLogin}>
             <fieldset className="fieldset">
                 <legend className="fieldset-legend font-semibold">Correo Electrónico</legend>
                 <input
                     type="text"
-                    className={`input h-12 w-full ${loginErrors.email ? 'input-error' : 'input-bordered'}`}
+                    className={`input h-12 w-full ${errors.email ? 'input-error' : 'input-bordered'}`}
                     placeholder="nombre@ejemplo.com"
-                    {...loginForm('email')}
+                    {...register('email')}
                 />
-                {loginErrors.email && (
-                    <p className="text-error text-xs mt-1">{loginErrors.email.message}</p>
-                )}
+                {errors.email && <p className="text-error text-xs mt-1">{errors.email.message}</p>}
             </fieldset>
 
             <fieldset className="fieldset">
@@ -44,9 +45,9 @@ const LoginForm = () => {
                 <div className="relative w-full">
                     <input
                         type={showPassword ? 'text' : 'password'}
-                        className={`input w-full h-12 ${loginErrors.password ? 'input-error' : 'input-bordered'}`}
+                        className={`input w-full h-12 ${errors.password ? 'input-error' : 'input-bordered'}`}
                         placeholder="••••••••"
-                        {...loginForm('password')}
+                        {...register('password')}
                     />
                     <button
                         type="button"
@@ -61,18 +62,24 @@ const LoginForm = () => {
                     </button>
                 </div>
 
-                {loginErrors.password && (
-                    <p className="text-error text-xs mt-1">{loginErrors.password.message}</p>
+                {errors.password && (
+                    <p className="text-error text-xs mt-1">{errors.password.message}</p>
                 )}
             </fieldset>
 
             <div className="space-y-6 mt-8">
                 <button
                     type="submit"
-                    className="btn btn-primary w-full h-14 rounded-xl shadow-lg shadow-primary/20 text-lg flex items-center justify-center gap-2 group hover:cursor-pointer"
+                    className={`btn btn-primary w-full h-14 rounded-xl text-lg flex items-center justify-center gap-2 group ${isLoading ? 'btn-disabled' : ''}`}
                 >
-                    <span>Entrar</span>
-                    <ArrowRightIcon className="size-5 group-hover:translate-x-1 transition-transform" />
+                    {isLoading ? (
+                        <span className="loading loading-spinner" />
+                    ) : (
+                        <>
+                            <span>Entrar</span>
+                            <ArrowRightIcon className="size-5 group-hover:translate-x-1 transition-transform" />
+                        </>
+                    )}
                 </button>
                 <p className="text-sm text-base-content/60 text-center">
                     ¿Aún no tienes una cuenta?

@@ -8,10 +8,12 @@ export const authGuard = (_request: Request, _options: NormalizedOptions, respon
     sessionStorage.clear()
     localStorage.removeItem('authStore')
 
-    const loginUrl = new URL('/login', window.location.origin)
+    const loginUrl = new URL('/auth', window.location.origin)
+
     if (window.location.pathname !== '/') {
         loginUrl.searchParams.set('redirect', window.location.pathname)
     }
+
     window.location.href = loginUrl.href
 
     throw new Error(response.status === 401 ? 'Session expired' : 'Access denied')
