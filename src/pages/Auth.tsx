@@ -1,14 +1,16 @@
-import { useState } from 'react'
+import { useSearchParams } from 'react-router'
 import LoginForm from '@/components/auth/LoginForm'
 import RegisterForm from '@/components/auth/RegisterForm'
 
 const Auth = () => {
-    const [isLogin, setIsLogin] = useState(true)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const mode = searchParams.get('mode') || 'login'
+    const isLogin = mode === 'login'
 
     return (
         <div className="min-h-screen flex flex-col font-sans">
-            <main className="flex-1 flex flex-col lg:flex-row">
-                <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/5">
+            <main className="flex-1 flex flex-col lg:flex-row p-2">
+                <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/5 rounded-3xl">
                     <div className="absolute inset-0 z-10 bg-linear-to-tr from-black/60 via-transparent to-transparent"></div>
                     <div
                         className="absolute inset-0 bg-cover bg-center transition-transform hover:scale-105 duration-1000"
@@ -65,14 +67,14 @@ const Auth = () => {
                             <button
                                 role="tab"
                                 className={`tab font-bold ${isLogin ? 'tab-active' : ''}`}
-                                onClick={() => setIsLogin(true)}
+                                onClick={() => setSearchParams({ mode: 'login' })}
                             >
                                 Iniciar Sesión
                             </button>
                             <button
                                 role="tab"
                                 className={`tab font-bold ${!isLogin ? 'tab-active' : ''}`}
-                                onClick={() => setIsLogin(false)}
+                                onClick={() => setSearchParams({ mode: 'register' })}
                             >
                                 Registrarse
                             </button>

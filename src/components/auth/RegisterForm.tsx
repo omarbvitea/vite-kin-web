@@ -98,12 +98,6 @@ const RegisterForm = () => {
                         </>
                     )}
                 </button>
-                <div className="text-sm text-base-content/60 text-center">
-                    ¿Ya tienes una cuenta?
-                    <a className="font-bold text-primary hover:underline ml-1 hover:cursor-pointer">
-                        Inicia sesión aquí
-                    </a>
-                </div>
             </div>
         </form>
     )

@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ToastProvider } from '@/context/toast-context'
 import { RouterProvider } from 'react-router'
-import router from '@/router'
+import router from '@/router/routes'
 import './index.css'
 
 const queryClient = new QueryClient()

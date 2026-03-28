@@ -81,12 +81,6 @@ const LoginForm = () => {
                         </>
                     )}
                 </button>
-                <p className="text-sm text-base-content/60 text-center">
-                    ¿Aún no tienes una cuenta?
-                    <a className="font-bold text-primary hover:underline ml-1 hover:cursor-pointer">
-                        Crea una aquí
-                    </a>
-                </p>
             </div>
         </form>
     )
